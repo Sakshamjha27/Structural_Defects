@@ -66,4 +66,4 @@ if st.button('Submit') :
         file_name='structural_defect_report.txt',
         mime='text/plain'
         ):
-        st.success('Your File is Downloaded !!!')  
+        st.success('Your File is Downloaded !!!')   
