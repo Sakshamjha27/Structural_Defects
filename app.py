@@ -7,7 +7,7 @@ import os
 # Configure the model
 gemini_api_key = os.getenv('TestProject1')
 genai.configure(api_key=gemini_api_key)
-model = genai.GenerativeModel('gemini-2.5-flash')
+model = genai.GenerativeModel('gemini-2.5-flash-lite')
 
 # Lets create sidebar for image uploads
 st.sidebar.title(':red[Upload the Images Here:]')
