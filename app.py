@@ -7,14 +7,15 @@ import os
 # Configure the model
 gemini_api_key = os.getenv('TestProject1')
 genai.configure(api_key=gemini_api_key)
-model = genai.GenerativeModel('gemini-2.5-flash-lite')
+model = genai.GenerativeModel('gemini-2.5-flash')
 
 # Lets create sidebar for image uploads
 st.sidebar.title(':red[Upload the Images Here:]')
-uploaded_img = st.sidebar.file_uploader('Image',type=['jpeg','png','jpg','jfif'])
- 
+uploaded_img = st.sidebar.file_uploader('Image',type=['jpeg','png','jpg','jfif'] ,
+                                        accept_multiple_files=True)
+
+uploaded_img = [Image.open(img) for img in uploaded_img] 
 if uploaded_img:
-    uploaded_img = Image.open(uploaded_img)
     st.sidebar.success('Image have been uploaded Successfully.')
     st.sidebar.subheader(':blue[Uploaded Images]')
     st.sidebar.image(uploaded_img)
@@ -55,14 +56,14 @@ if st.button('Submit') :
         * Make sure report does not exceed 3 pages.
         '''
     
-        response = model.generate_content([prompt,uploaded_img],
+        response = model.generate_content([prompt,*uploaded_img],
                        generation_config={'temperature':0.7})
         st.write(response.text)
 
-        if st.download_button(
-            label='Click to Download',
-            data = response.text,
-            file_name='structural_defect_report.txt',
-            mime='text/plain'
+    if st.download_button(
+        label='Click to Download',
+        data = response.text,
+        file_name='structural_defect_report.txt',
+        mime='text/plain'
         ):
-            st.success('Your File is Downloaded !!!')
+        st.success('Your File is Downloaded !!!') 
